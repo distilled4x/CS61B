@@ -7,7 +7,7 @@ public class Planet {
 	public double yyVel;
 	public double mass;
 	public String imgFileName; 
-	public final double g = 6.67e-11;
+	private final double g = 6.67e-11;
 
 	public Planet(double xP, double yP, double xV, double yV, double m, String img) {
 		xxPos = xP;
@@ -40,7 +40,6 @@ public class Planet {
 
 	/** removed abschange for sim*/ 
 	public double calcForceExertedByX(Planet another) {
-		//double change = this.xxPos - another.xxPos; 
 		double change = another.xxPos - this.xxPos;
 		//double absChange = getAbsChange(change);
 		return (calcForceExertedBy(another) * change) / calcDistance(another);
@@ -48,14 +47,13 @@ public class Planet {
 
 	/** removed abschange for sim*/ 
 	public double calcForceExertedByY(Planet another) {
-		//double change = this.yyPos - another.yyPos;
 		double change = another.yyPos - this.yyPos;
 		//double absChange = getAbsChange(change);
 		return (calcForceExertedBy(another) * change) / calcDistance(another);
 
 	}
 
-	public double getAbsChange(double change) {
+	private double getAbsChange(double change) {
 		if (change < 0) {
 			return change * -1;
 		} else {
