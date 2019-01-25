@@ -66,6 +66,7 @@ public class ArrayDeque<T> {
         items = a;
     }
 
+    /*
     public static void main(String[] args) {
         ArrayDeque<Integer> deck = new ArrayDeque<>();
         deck.addLast(5);
@@ -85,5 +86,5 @@ public class ArrayDeque<T> {
         System.out.println();
         deck.removeFirst();
         deck.printDeque();
-    }
+    }*/
 }
