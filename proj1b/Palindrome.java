@@ -4,7 +4,7 @@ public class Palindrome {
         if (word.equals("")) {
             return null;
         }
-
+        word = word.toLowerCase();
         Deque<Character> d = new LinkedListDeque<Character>();
         for (int i = 0; i < word.length(); i++) {
             d.addLast(word.charAt(i));
@@ -17,7 +17,7 @@ public class Palindrome {
         if (word.equals("")) {
             return null;
         }
-
+        word = word.toLowerCase();
         Deque<Character> d = new LinkedListDeque<Character>();
         for (int i = 0; i < word.length(); i++) {
             d.addFirst(word.charAt(i));

@@ -9,9 +9,6 @@ public class testOffByN {
     public void testEqualChars() {
         assertTrue(o.equalChars('a', 'f'));
         assertFalse(o.equalChars('b', 'z'));
-
-
-
     }
 
 }
