@@ -1,5 +1,5 @@
-// TODO: Make sure to make this class a part of the synthesizer package
-//package <package name>;
+
+package synthesizer;
 
 //Make sure this class is public
 public class GuitarString {
@@ -14,34 +14,45 @@ public class GuitarString {
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        // TODO: Create a buffer with capacity = SR / frequency. You'll need to
-        //       cast the result of this divsion operation into an int. For better
-        //       accuracy, use the Math.round() function before casting.
-        //       Your buffer should be initially filled with zeros.
+        double x = Math.round(SR / frequency);
+        int capacity = (int) x;
+        buffer = new ArrayRingBuffer(capacity);
     }
 
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        // TODO: Dequeue everything in the buffer, and replace it with random numbers
-        //       between -0.5 and 0.5. You can get such a number by using:
-        //       double r = Math.random() - 0.5;
-        //
-        //       Make sure that your random numbers are different from each other.
+        int stop = buffer.fillCount();
+        for (int i = 0; i < stop; i++) {
+            buffer.dequeue();
+        }
+
+        for (int i = 0; i < buffer.capacity(); i++) {
+            buffer.enqueue(Math.random() - .5);
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm. 
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       Do not call StdAudio.play().
+        if (!buffer.isEmpty()) {
+            double sampleOne = buffer.dequeue();
+            double sampleTwo = buffer.peek();
+
+            double toAdd = ((sampleOne + sampleTwo) / 2) * DECAY;
+
+            buffer.enqueue(toAdd);
+        }
+
+
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        // TODO: Return the correct thing.
+        if (!buffer.isEmpty()) {
+            return buffer.peek();
+        }
         return 0;
     }
 }
