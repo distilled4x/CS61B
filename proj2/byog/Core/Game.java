@@ -2,12 +2,76 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
 
 public class Game {
     TERenderer ter = new TERenderer();
-    /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
+    TETile[][] world = new TETile[WIDTH][HEIGHT];
+
+    public Game() {
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+    }
+
+    public void drawRoom(int height, int width, int startX, int startY) {
+        for (int i = startY; i < startY + height; i++) {
+            for (int j = startX; j < startX + width; j++) {
+                if (i == startY || i == startY + height - 1 || j == startX || j == startX + width - 1) {
+                    world[j][i] = Tileset.WALL;
+                } else {
+                    world[j][i] = Tileset.FLOOR;
+                }
+            }
+        }
+    }
+
+    public void drawHallway(int direction, int length, int startX, int startY) {
+
+        switch (direction) {
+            case 1 : //up
+                for (int i = startY; i < startY + length; i++) {
+                    world[startX][i] = Tileset.WALL;
+                    world[startX + 1][i] = Tileset.FLOOR;
+                    world[startX + 2][i] = Tileset.FLOOR;
+                    world[startX + 3][i] = Tileset.WALL;
+                }
+                break;
+
+            case 2 : //down
+                for (int i = startY; i < startY - length; i--) {
+                    world[startX][i] = Tileset.WALL;
+                    world[startX + 1][i] = Tileset.FLOOR;
+                    world[startX + 2][i] = Tileset.FLOOR;
+                    world[startX + 3][i] = Tileset.WALL;
+                }
+                break;
+
+            case 3 : //left
+                for (int i = startX; i < startX  - length; i--) {
+                    world[i][startY] = Tileset.WALL;
+                    world[i][startY + 1] = Tileset.FLOOR;
+                    world[i][startY + 2] = Tileset.FLOOR;
+                    world[i][startY + 3] = Tileset.WALL;
+                }
+                break;
+
+            case 4 : //right
+                for (int i = startX; i < startX + length; i++) {
+                    world[i][startY] = Tileset.WALL;
+                    world[i][startY + 1] = Tileset.FLOOR;
+                    world[i][startY + 2] = Tileset.FLOOR;
+                    world[i][startY + 3] = Tileset.WALL;
+                }
+                break;
+        }
+    }
+
+
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
